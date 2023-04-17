@@ -1,2 +1,5 @@
 data/
 venv/
+balanced_dataset/
+Yolo_format_data/
+train.json
