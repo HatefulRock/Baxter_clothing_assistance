@@ -7,7 +7,9 @@ import numpy as np
 # Load YOLOv5 model
 #model = torch.load('./yolov5.pt')
 #model = torch.hub.load('./yolov5.pt', 'custom', path='./yolov5.pt', source='local')
-model = torch.hub.load('../yolov5', 'custom', path='./best.pt', source='local')
+#model = torch.hub.load('../yolov5', 'custom', path='./runs/train/exp23/weights/best.pt', source='local')
+model = torch.hub.load('../yolov5', 'custom', path='./yolov5_5k.pt', source='local')
+
 model_name='yolov5.pt'
 #model = torch.hub.load(os.getcwd(), 'custom', source='local', path = model_name, force_reload = True)
 
