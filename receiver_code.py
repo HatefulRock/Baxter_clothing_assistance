@@ -30,11 +30,11 @@ if __name__ == "__main__":
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
     sock.listen(1)
-    print(f"Listening on {host}:{port}")
+    #print(f"Listening on {host}:{port}")
 
     # Accept a connection from the sender
     conn, addr = sock.accept()
-    print(f"Connected to {addr[0]}:{addr[1]}")
+    #print(f"Connected to {addr[0]}:{addr[1]}")
 
     cv2.namedWindow('Receiver - Color', cv2.WINDOW_NORMAL)
     cv2.namedWindow('Receiver - Depth', cv2.WINDOW_NORMAL)
