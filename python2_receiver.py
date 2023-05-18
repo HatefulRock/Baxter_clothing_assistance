@@ -26,15 +26,15 @@ def receive_image_from_socket(sock):
 if __name__ == "__main__":
     # Initialize network socket
     host = '0.0.0.0'  # Listen on all available network interfaces
-    port = 5000  # Use the same port number as the sender script
+    port = 5353  # Use the same port number as the sender script
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
     sock.listen(1)
-    print "Listening on {}:{}".format(host, port)
+    print("Listening on {}:{}".format(host, port))
 
     # Accept a connection from the sender
     conn, addr = sock.accept()
-    print "Connected to {}:{}".format(addr[0], addr[1])
+    print("Connected to {}:{}".format(addr[0], addr[1]))
 
     cv2.namedWindow('Receiver - Color', cv2.WINDOW_NORMAL)
     cv2.namedWindow('Receiver - Depth', cv2.WINDOW_NORMAL)

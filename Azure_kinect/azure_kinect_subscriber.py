@@ -37,3 +37,4 @@ pcd.colors = o3d.utility.Vector3dVector(color_image.reshape(-1, 3) / 255.0)
 
 # Visualize the point cloud
 o3d.visualization.draw_geometries([pcd])
+
