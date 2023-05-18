@@ -26,7 +26,7 @@ def receive_image_from_socket(sock):
 if __name__ == "__main__":
     # Initialize network socket
     host = '0.0.0.0'  # Listen on all available network interfaces
-    port = 5000  # Use the same port number as the sender script
+    port = 27017  # Use the same port number as the sender script
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
     sock.listen(1)
