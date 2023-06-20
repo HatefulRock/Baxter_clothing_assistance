@@ -7,6 +7,10 @@ import numpy as np
 pipeline = rs.pipeline()
 config = rs.config()
 config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+
+# Create alignment object
+align = rs.align(rs.stream.color)
 
 # Start the pipeline
 pipeline.start(config)
@@ -18,12 +22,19 @@ mp_pose = mp.solutions.pose
 # Initialize the pose estimator
 pose_estimator = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
+
 # Process the video stream
 while True:
     # Wait for a new frame from the RealSense camera
     frames = pipeline.wait_for_frames()
-    color_frame = frames.get_color_frame()
-    depth_frame = frames.get_depth_frame()
+
+     # Align depth frame to color frame
+    aligned_frames = align.process(frames)
+    color_frame = aligned_frames.get_color_frame()
+    depth_frame = aligned_frames.get_depth_frame()
+
+    # color_frame = frames.get_color_frame()
+    # depth_frame = frames.get_depth_frame()
 
     if not color_frame:
         continue
@@ -70,6 +81,8 @@ while True:
             landmark = results.pose_landmarks.landmark[index]
             right_landmarks.append((int(landmark.x * image_width), int(landmark.y * image_height)))
 
+
+
     # Calculate the direction vector perpendicular to the arm
     dx = left_landmarks[2][0] - left_landmarks[0][0]
     dy = left_landmarks[2][1] - left_landmarks[0][1]
@@ -109,6 +122,21 @@ while True:
         cv2.line(image, start_point, end_point, (0, 0, 255), 2)
 
 
+    # Map 2D trajectory points to their corresponding depth values
+    depth_intrinsics = depth_frame.profile.as_video_stream_profile().intrinsics
+    depth_scale = pipeline.get_active_profile().get_device().first_depth_sensor().get_depth_scale()
+    depth_image = np.asanyarray(depth_frame.get_data())
+    depth_values = []
+    for point in trajectory_2d:
+        depth_value = depth_image[int(point[1]), int(point[0])] * depth_scale
+        depth_values.append(depth_value)
+
+    # Convert depth values to 3D coordinates
+    trajectory_3d = []
+    for i in range(len(trajectory_2d)):
+        depth_value = depth_values[i]
+        point_3d = rs.rs2_deproject_pixel_to_point(depth_intrinsics, [trajectory_2d[i][0], trajectory_2d[i][1]], depth_value)
+        trajectory_3d.append(point_3d)
 
 
     # Show the image with landmarks and numbers
