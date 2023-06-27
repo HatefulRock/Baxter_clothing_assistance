@@ -75,20 +75,24 @@ def main():
             pose_landmarks = results.pose_landmarks
             if pose_landmarks is not None:
                 for landmark in pose_landmarks.landmark:
+                    print("Landmark",landmark)
+                    #print the number of the landmark
                     x = int(landmark.x * image.shape[1])
                     y = int(landmark.y * image.shape[0])
                     cv2.circle(image, (x, y), 5, (0, 255, 0), -1)
+                    cv2.putText(image, str(index), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1, cv2.LINE_AA)
 
-                    #print the landmark index and x,y,z coordinates
-                    print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['x'].number, x)
-                    print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['y'].number, y)
-                    print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['z'].number, landmark.z)
+
+                    # #print the landmark index and x,y,z coordinates
+                    # print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['x'].number, x)
+                    # print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['y'].number, y)
+                    # print(landmark_pb2.Landmark.DESCRIPTOR.fields_by_name['z'].number, landmark.z)
 
             # Draw the pose annotation on the image.
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-            mp_drawing.draw_landmarks(
-                image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+            #mp_drawing.draw_landmarks(
+             #   image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
             current_time = time.time()
             fps = 1 / (current_time - prev_frame_time)
