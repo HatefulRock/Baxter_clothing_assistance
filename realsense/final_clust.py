@@ -119,7 +119,6 @@ depth_intrinsics = depth_profile.get_intrinsics()
 w, h = depth_intrinsics.width, depth_intrinsics.height
 
 pc = rs.pointcloud()
-
 while True:
     try:
         frames = pipeline.wait_for_frames()
@@ -146,6 +145,7 @@ while True:
         for midpoint in midpoints:
             x, y = midpoint
             cv2.circle(isolated_tape, (x, y), 5, (0, 255, 0), -1)
+            
 
         # Display the original image and the isolated green tape
         cv2.imshow("Original Image", color_image)
@@ -154,11 +154,36 @@ while True:
         # Extract the midpoints from midpoints_3d
         midpoints = midpoints_3d[:, :3]
 
-        # Convert the midpoints to a string representation
-        midpoints_str = np.array2string(midpoints, separator=',')[1:-1]
+        #Covert the midpoints into a tuple
+        midpoints = tuple(map(tuple, midpoints))
 
-        # Send the midpoints to the server
-        sock.sendall(midpoints_str.encode())
+        # print("Midpointss:", midpoints)
+
+        # # Convert midpoints to a string
+        # midpoints_str = ','.join(str(coord) for midpoint in midpoints for coord in midpoint)
+
+        # # Send the midpoints to the server
+        # print("Midpoints:", midpoints_str)
+        # sock.sendall(midpoints_str.encode())
+
+         # Extract the midpoints, labels, and point labels from midpoints_3d
+        midpoints = midpoints_3d[:, :3]
+        labels = midpoints_3d[:, 2]  # Use z-coordinate as the label
+
+        # Convert midpoints, labels, and point labels to a string
+        point_labels = ["point1", "point2"]
+        data_str = ""
+        for i, (midpoint, label) in enumerate(zip(midpoints, labels)):
+            x, y, z = midpoint
+            #i want that at every iteration of the loop, the point label changes
+            index=i%len(point_labels)
+            data_str += f"({x},{y},{z},{point_labels[index]}),"
+            index+=1
+            #if i != len(midpoints) - 1:
+                #data_str += ","
+        # Send the data to the server
+        print("Data:", data_str)
+        sock.sendall(data_str.encode())
 
         # Exit the program when the user presses 'q'
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -175,3 +200,4 @@ sock.close()
 
 # Close all windows
 cv2.destroyAllWindows()
+
