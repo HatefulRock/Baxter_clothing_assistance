@@ -3,6 +3,17 @@ import mediapipe as mp
 import pyrealsense2 as rs
 import numpy as np
 
+
+
+def vect_func(x1,x2,y1,y2):
+    return (x2-x1,y2-y1)
+
+
+
+
+
+
+
 # Initialize the RealSense pipeline
 pipeline = rs.pipeline()
 config = rs.config()
