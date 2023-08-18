@@ -96,12 +96,12 @@ while True:
         # Draw lines offset from the left arm
         for i in range(len(left_landmarks) - 1):
             start_point = (
-                int(left_landmarks[i][0] + offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
-                int(left_landmarks[i][1] + offset_y * 30)
+                int(left_landmarks[i][0] - offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
+                int(left_landmarks[i][1] - offset_y * 30)
             )
             end_point = (
-                int(left_landmarks[i + 1][0] + offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
-                int(left_landmarks[i + 1][1] + offset_y * 30)
+                int(left_landmarks[i + 1][0] - offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
+                int(left_landmarks[i + 1][1] - offset_y * 30)
             )
             cv2.line(image, start_point, end_point, (0, 0, 255), 2)
 
@@ -115,12 +115,12 @@ while True:
         # Draw lines offset from the right arm
         for i in range(len(right_landmarks) - 1):
             start_point = (
-                int(right_landmarks[i][0] + offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
-                int(right_landmarks[i][1] + offset_y * 30)
+                int(right_landmarks[i][0] - offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
+                int(right_landmarks[i][1] - offset_y * 30)
             )
             end_point = (
-                int(right_landmarks[i + 1][0] + offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
-                int(right_landmarks[i + 1][1] + offset_y * 30)
+                int(right_landmarks[i + 1][0] - offset_x * 30),  # Adjust the offset value (30) for desired distance outside the arm
+                int(right_landmarks[i + 1][1] - offset_y * 30)
             )
             cv2.line(image, start_point, end_point, (0, 0, 255), 2)
 
