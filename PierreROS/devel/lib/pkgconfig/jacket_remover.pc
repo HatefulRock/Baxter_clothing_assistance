@@ -1,0 +1,8 @@
+prefix=/home/baxter/Desktop/PierreROS/devel
+
+Name: jacket_remover
+Description: Description of jacket_remover
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/baxter/Desktop/PierreROS/devel/lib 
+Requires: 

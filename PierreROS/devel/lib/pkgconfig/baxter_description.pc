@@ -1,0 +1,8 @@
+prefix=/home/baxter/Desktop/PierreROS/devel
+
+Name: baxter_description
+Description: Description of baxter_description
+Version: 1.2.0
+Cflags: 
+Libs: -L/home/baxter/Desktop/PierreROS/devel/lib 
+Requires: 

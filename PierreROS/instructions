@@ -1,0 +1,24 @@
+how to start my project
+in all terminals
+cd Desktop/PierreROS
+./baxter.sh
+
+if you want the simulation
+roslaunch baxter_gazebo baxter_world.launch 
+
+else
+terminal 1
+roslaunch irex init.launch
+
+terminal 2
+roslaunch irex init_project.launch
+
+terminal 3
+roslaunch jacket_remover main.launch
+
+To find the coords
+run final_clust on laptop
+run receiver.py on baxter computer
+use end_effector script to get coords of the baxter end effector
+
+minimum distance for the manquin to be at 0.8

@@ -1,0 +1,8 @@
+prefix=/home/baxter/Desktop/PierreROS/install
+
+Name: kinect_anywhere
+Description: Description of kinect_anywhere
+Version: 0.0.0
+Cflags: -I/home/baxter/Desktop/PierreROS/install/include
+Libs: -L/home/baxter/Desktop/PierreROS/install/lib 
+Requires: geometry_msgs std_msgs message_runtime
